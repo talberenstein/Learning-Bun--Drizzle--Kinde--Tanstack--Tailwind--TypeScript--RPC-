@@ -1,0 +1,20 @@
+{
+  "name": "bun",
+  "module": "index.ts",
+  "type": "module",
+  "devDependencies": {
+    "@types/bun": "latest"
+  },
+  "scripts": {
+    "start": "bundle index.ts",
+    "dev": "bun --watch index.ts"
+  },
+  "peerDependencies": {
+    "typescript": "^5.0.0"
+  },
+  "dependencies": {
+    "@hono/zod-validator": "^0.4.3",
+    "hono": "^4.6.20",
+    "zod": "^3.24.1"
+  }
+}
