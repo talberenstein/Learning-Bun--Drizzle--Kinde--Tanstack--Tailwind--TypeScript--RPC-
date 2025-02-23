@@ -1,13 +1,13 @@
 {
   "name": "bun",
-  "module": "index.ts",
+  "module": "server/index.ts",
   "type": "module",
   "devDependencies": {
     "@types/bun": "latest"
   },
   "scripts": {
-    "start": "bundle index.ts",
-    "dev": "bun --watch index.ts"
+    "start": "bundle server/index.ts",
+    "dev": "bun --watch server/index.ts"
   },
   "peerDependencies": {
     "typescript": "^5.0.0"

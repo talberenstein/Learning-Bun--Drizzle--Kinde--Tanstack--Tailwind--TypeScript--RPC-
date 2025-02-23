@@ -8,6 +8,8 @@ const expenseSchema = z.object({
   amount: z.number(),
 });
 
+const createPostSchema = expenseSchema.omit({ id: true });
+
 type Expense = z.infer<typeof expenseSchema>;
 
 const fakeExpenses: Expense[] = [
@@ -20,11 +22,15 @@ const expensesRoute = new Hono()
   .get("/", (c) => {
     return c.json({ expenses: fakeExpenses });
   })
-  .post("/", zValidator("json", expenseSchema), async (c) => {
+  .get("/total-spent", (c) => {
+    const total = fakeExpenses.reduce((acc, e) => acc + e.amount, 0);
+    return c.json({ total });
+  })
+  .post("/", zValidator("json", createPostSchema), async (c) => {
     c.status(201);
     const data = await c.req.valid("json");
-    const expense = expenseSchema.parse(data);
-    fakeExpenses.push({ ...expense, id: fakeExpenses.length + 1 });
+    const expense = createPostSchema.parse(data);
+    fakeExpenses.push({ id: fakeExpenses.length + 1, ...expense });
     // const expense = await c.req.json();
     console.log({ expense });
     return c.json({ message: "Expense created!" });
